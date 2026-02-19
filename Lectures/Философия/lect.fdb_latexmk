@@ -1,12 +1,12 @@
 # Fdb version 4
-["pdflatex"] 1770794927.70583 "c:/projects/3Sem2Part/Lectures/Философия/lect.tex" "lect.pdf" "lect" 1770794933.88869 0
+["pdflatex"] 1771397630.84774 "c:/projects/3Sem2Part/Lectures/Философия/lect.tex" "lect.pdf" "lect" 1771397634.03537 0
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/labx1000.tfm" 1739782556 3300 6abb8e321227ead2a8e929e5abc72bd3 ""
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/labx1440.tfm" 1737305104 3304 6a543c07045572737981351171e0505e ""
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/larm1000.tfm" 1736270757 3220 0e417eaf233b160335902e97259a6c77 ""
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/larm1200.tfm" 1736270751 3240 c2435f2b5cd66d4930bc29b8df87967e ""
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/larm1440.tfm" 1736268968 3256 3daaa33cf35cf3f354983aa3214ecd7f ""
   "c:/Users/lenovo/.texlive2024/texmf-var/fonts/tfm/lh/lh-t2a/larm1728.tfm" 1737305102 3252 3140686608bdcae603a09a7973fb9e55 ""
-  "c:/projects/3Sem2Part/Lectures/Философия/lect.tex" 1770794926 1256 101530c02a7438b9e558397423fd682b ""
+  "c:/projects/3Sem2Part/Lectures/Философия/lect.tex" 1771397626 2077 d16b11cb8ef582199ea15109dac9b418 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc" 1736240697 3141 82d5616418ed8d5de703b3951bedecb4 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1736240697 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1736245174 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -95,8 +95,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1736268392 5507294 622fb8774426721e33ee446696659781 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1736268599 3348008 5501088e67e0869ccd0d8d2359c15a04 ""
   "c:/texlive/2024/texmf.cnf" 1736268368 713 e69b156964470283e0530f5060668171 ""
-  "lect.aux" 1770794933 352 2e013aac8d5c8ffb7495aa0c4f4a75dc "pdflatex"
-  "lect.tex" 1770794926 1256 101530c02a7438b9e558397423fd682b ""
+  "lect.aux" 1771397633 372 1be84e74de0bd438841ae8ccb9716adc "pdflatex"
+  "lect.tex" 1771397626 2077 d16b11cb8ef582199ea15109dac9b418 ""
   (generated)
   "lect.aux"
   "lect.log"

@@ -33,5 +33,7 @@ CROSS JOIN
 LIMIT 40; 
 
 
-SELECT * FROM public.account
+SELECT * FROM client
 ORDER BY id ASC 
+
+

@@ -172,10 +172,9 @@ LEFT JOIN Flowers f ON f.Id = ag.Id % 12 + 1
 WHERE random() > 0.7 -- Не для всех товаров, чтобы не было слишком много записей
 LIMIT 100;
 
-
 -- ЗАПРОСЫ -- 
 -- 1. Пункт Соеденения
-SELECT '--- 1. INNER JOIN ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS) 
 SELECT a.Id, a.DatePurchase, a.Summ, c.Name, c.LastName
 FROM Account a
 INNER JOIN Client c ON a.IdClient = c.Id
@@ -183,7 +182,7 @@ LIMIT 10;
 --
 
 -- 2. Пункт Операции над множествами
-SELECT '--- 2. UNION ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT Name AS ItemName, 'Flower' AS ItemType FROM Flowers
 UNION
 SELECT Name, 'Bouquet' FROM Bouquet
@@ -192,7 +191,7 @@ LIMIT 20;
 --
 
 -- 3. Пункт Предикаты
-SELECT '--- 3. EXISTS ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT c.Name, c.LastName
 FROM Client c
 WHERE EXISTS (
@@ -203,7 +202,10 @@ WHERE EXISTS (
 --
 
 -- 4. Пункт Выражения CASE
-SELECT '--- 4. CASE ---' AS query_type;
+SET enable_seqscan = ON;
+SET enable_indexscan = OFF; 
+
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT Name, LastName, NumberPurchase,
     CASE 
         WHEN NumberPurchase BETWEEN 5 AND 15 THEN 'Постоянный клиент'
@@ -211,18 +213,19 @@ SELECT Name, LastName, NumberPurchase,
         ELSE 'Супер-VIP'
     END AS ClientCategory
 FROM Client
+WHERE NumberPurchase > 25
 ORDER BY NumberPurchase DESC;
 --
 
 -- 5. Пункт Встроенные функции
-SELECT '--- 5. COALESCE ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT Name, LastName, COALESCE(Otchestvo, 'нет отчества') AS MiddleName
 FROM Client
 WHERE Id <= 25;
 --
 
 -- 6. Пункт Строки
-SELECT '--- 6. STRING FUNCTIONS ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT 
     Name, 
     LENGTH(Name) AS NameLength,
@@ -233,7 +236,7 @@ WHERE Id <= 5;
 --
 
 -- 7. Пункт Дата и время
-SELECT '--- 7. DATE FUNCTIONS ---' AS query_type;
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT 
     Id, 
     DatePurchase,
@@ -244,7 +247,11 @@ LIMIT 10;
 --
 
 -- 8. Пункт Агрегатные функции GROUP BY, HAVING
-SELECT '--- 8. AGGREGATE FUNCTIONS ---' AS query_type;
+-- Или явно включить индексы
+SET enable_indexscan = ON;
+SET enable_bitmapscan = ON;
+SET enable_seqscan = OFF;  
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT 
     c.Id, 
     c.Name || ' ' || c.LastName AS FullName,
@@ -278,8 +285,7 @@ CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber);
 CREATE INDEX idx_account_date_status ON Account(DatePurchase, Status);
 
 -- 4. Индекс с использованием выражения
--- Для поиска по фамилии в верхнем регистре
-CREATE INDEX idx_client_lastname_upper ON Client(UPPER(LastName));
+CREATE INDEX idx_flowers_name_upper ON Flowers(UPPER(Name));
 
 -- 5. Покрывающий индекс (включает все поля, используемые в запросе)
 -- Покрывает запрос с агрегатными функциями
@@ -352,8 +358,6 @@ CREATE INDEX idx_flowers_country ON Flowers(Country, Name);
 
 
 -- Индексы для операторов сравнения
--- ===================================================
-
 -- Для BETWEEN (по дате)
 CREATE INDEX idx_account_date_range ON Account(DatePurchase) INCLUDE (Summ, Status);
 

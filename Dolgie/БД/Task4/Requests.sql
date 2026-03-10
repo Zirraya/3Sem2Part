@@ -175,24 +175,85 @@ LIMIT 100;
 
 -- ЗАПРОСЫ -- 
 -- 1. Пункт Соеденения
-SELECT '--- 1. INNER JOIN ---' AS query_type;
 SELECT a.Id, a.DatePurchase, a.Summ, c.Name, c.LastName
 FROM Account a
 INNER JOIN Client c ON a.IdClient = c.Id
 LIMIT 10;
 --
+SELECT c.Name, c.LastName, a.Id AS CheckId, a.DatePurchase, a.Summ
+FROM Client c
+LEFT JOIN Account a ON c.Id = a.IdClient
+ORDER BY c.LastName, c.Name
+LIMIT 20;
+--
+SELECT 
+    COALESCE(c.Name, 'Нет клиента') AS ClientName,
+    COALESCE(c.LastName, '') AS ClientLastName,
+    a.Id AS CheckId,
+    a.DatePurchase,
+    a.Summ
+FROM Client c
+FULL JOIN Account a ON c.Id = a.IdClient
+WHERE a.Id IS NOT NULL OR c.Id IS NOT NULL
+ORDER BY a.DatePurchase DESC NULLS LAST
+LIMIT 25;
+--
+SELECT tg.NameType AS TypeName, f.Name AS FlowerName
+FROM TypeGoods tg
+CROSS JOIN Flowers f
+WHERE tg.IdTypeGoods <= 3 AND f.Id <= 5 -- ОГРАНИЧЕНИЕ ПРОСТО
+ORDER BY tg.NameType, f.Name;
+--
+SELECT c.Name, c.LastName, lat.CheckId, lat.Summ, lat.DatePurchase
+FROM Client c
+CROSS JOIN LATERAL (
+    SELECT a.Id AS CheckId, a.Summ, a.DatePurchase
+    FROM Account a
+    WHERE a.IdClient = c.Id
+    ORDER BY a.Summ DESC
+    LIMIT 3
+) lat
+WHERE c.Id <= 10
+ORDER BY c.LastName, lat.Summ DESC;
+--Самосоединение (Self Join) - клиенты с одинаковым количеством покупок
+SELECT 
+    c1.Name AS Client1_Name,
+    c1.LastName AS Client1_LastName,
+    c1.NumberPurchase AS Purchases,
+    c2.Name AS Client2_Name,
+    c2.LastName AS Client2_LastName
+FROM Client c1
+INNER JOIN Client c2 ON c1.NumberPurchase = c2.NumberPurchase AND c1.Id < c2.Id
+ORDER BY c1.NumberPurchase DESC;
+--
+--
 
 -- 2. Пункт Операции над множествами
-SELECT '--- 2. UNION ---' AS query_type;
 SELECT Name AS ItemName, 'Flower' AS ItemType FROM Flowers
 UNION
 SELECT Name, 'Bouquet' FROM Bouquet
 ORDER BY ItemName
 LIMIT 20;
 --
+SELECT Name AS ItemName, 'Flower' AS ItemType
+FROM Flowers
+UNION ALL
+SELECT Name, 'Bouquet'
+FROM Bouquet
+WHERE Name LIKE '%Роза%' -- Только букеты с розами
+ORDER BY ItemName;
+--
+SELECT Id FROM Flowers -- ОНО ПУСТОЕ ТАК И ДОЛЖНО БЫТЬ
+EXCEPT
+SELECT DISTINCT IdFlower FROM FlowersAndBouquet WHERE IdFlower IS NOT NULL;
+--
+SELECT Name FROM Flowers -- ОНО ПУСТОЕ ТАК И ДОЛЖНО БЫТЬ
+INTERSECT
+SELECT Name FROM Bouquet;
+--
+--
 
 -- 3. Пункт Предикаты
-SELECT '--- 3. EXISTS ---' AS query_type;
 SELECT c.Name, c.LastName
 FROM Client c
 WHERE EXISTS (
@@ -201,9 +262,42 @@ WHERE EXISTS (
     WHERE a.IdClient = c.Id AND a.Summ < 2000
 );
 --
+SELECT Name, LastName, PhoneNumber
+FROM Client
+WHERE Name IN ('Иван', 'Мария', 'Алексей', 'Елена');
+--
+SELECT Name, LastName, NumberPurchase
+FROM Client
+WHERE NumberPurchase BETWEEN 10 AND 25
+ORDER BY NumberPurchase;
+--
+SELECT Name, LastName, PhoneNumber
+FROM Client
+WHERE LastName LIKE 'Пет%';
+--
+SELECT Name, LastName
+FROM Client
+WHERE LastName ILIKE '%ов%';
+--
+SELECT c.Name, c.LastName
+FROM Client c
+WHERE 2000 < ALL (
+    SELECT COALESCE(Summ, 0)
+    FROM Account a
+    WHERE a.IdClient = c.Id
+);
+--
+SELECT DISTINCT c.Name, c.LastName
+FROM Client c
+WHERE c.Id = ANY (
+    SELECT IdClient
+    FROM Account
+    WHERE Summ > 5000
+);
+--
+--
 
 -- 4. Пункт Выражения CASE
-SELECT '--- 4. CASE ---' AS query_type;
 SELECT Name, LastName, NumberPurchase,
     CASE 
         WHEN NumberPurchase BETWEEN 5 AND 15 THEN 'Постоянный клиент'
@@ -213,16 +307,46 @@ SELECT Name, LastName, NumberPurchase,
 FROM Client
 ORDER BY NumberPurchase DESC;
 --
+SELECT 
+    Name, 
+    LastName, 
+    COALESCE(Otchestvo, 'нет отчества') AS MiddleName,
+    COALESCE(PhoneNumber, 'телефон не указан') AS Phone
+FROM Client
+WHERE Id <= 25;
+--
+SELECT 
+    Name,
+    LastName,
+    Otchestvo,
+    NULLIF(Otchestvo, LastName) AS OtchestvoIfNotLastName
+FROM Client;
+--
+SELECT 
+    Name,
+    NumberPurchase,
+    LENGTH(Name) AS NameLength,
+    GREATEST(NumberPurchase, LENGTH(Name), 5) AS GreatestValue
+FROM Client
+LIMIT 10;
+--
+SELECT 
+    Name,
+    NumberPurchase,
+    LENGTH(Name) AS NameLength,
+    LEAST(NumberPurchase, LENGTH(Name), 10) AS LeastValue
+FROM Client
+LIMIT 10;
+--
+--
 
 -- 5. Пункт Встроенные функции
-SELECT '--- 5. COALESCE ---' AS query_type;
 SELECT Name, LastName, COALESCE(Otchestvo, 'нет отчества') AS MiddleName
 FROM Client
 WHERE Id <= 25;
 --
 
 -- 6. Пункт Строки
-SELECT '--- 6. STRING FUNCTIONS ---' AS query_type;
 SELECT 
     Name, 
     LENGTH(Name) AS NameLength,
@@ -231,9 +355,57 @@ SELECT
 FROM Client
 WHERE Id <= 5;
 --
+SELECT 
+    Name,
+    LastName,
+    STRPOS(Name, 'ан') AS Pos_an_in_Name,
+    STRPOS(LastName, 'ов') AS Pos_ov_in_LastName,
+    POSITION('ова' IN LastName) AS Pos_ova_in_LastName
+FROM Client
+WHERE LastName LIKE '%ова%' OR Name LIKE '%ан%';
+--
+-- SUBSTRING(строка FROM начало FOR длина)
+-- SUBSTRING(строка FROM шаблон)
+SELECT 
+    Name,
+    LastName,
+    SUBSTRING(Name FROM 1 FOR 3) AS First3Chars,
+    SUBSTRING(Name FROM 3 FOR 2) AS From3Length2,
+    SUBSTRING(PhoneNumber FROM 5 FOR 10) AS PhoneWithoutCode,
+    SUBSTRING(PhoneNumber FROM POSITION('9' IN PhoneNumber) FOR 10) AS PhonePart
+FROM Client
+LIMIT 10;
+--
+SELECT 
+    Name,
+    LastName,
+    OVERLAY(Name PLACING '***' FROM 2 FOR 3) AS NameMasked,
+    OVERLAY(PhoneNumber PLACING 'XXX' FROM 6 FOR 3) AS PhoneMasked,
+    OVERLAY(LastName PLACING UPPER(SUBSTRING(LastName, 1, 1)) FROM 1 FOR 1) AS LastNameCapitalized
+FROM Client
+LIMIT 10;
+-- 
+SELECT 
+    Name,
+    REPLACE(Name, 'а', '@') AS NameWithAt,
+    REPLACE(LastName, 'ов', 'ОВ') AS LastNameUpper,
+    PhoneNumber,
+    REPLACE(REPLACE(REPLACE(PhoneNumber, '(', ''), ')', ''), '-', '') AS PhoneClean
+FROM Client
+LIMIT 10;
+-- 
+SELECT 
+    Id,
+    Name,
+    '  ' || Name || '  ' AS PaddedName,
+    LTRIM('  ' || Name || '  ') AS LeftTrimmed,
+    RTRIM('  ' || Name || '  ') AS RightTrimmed,
+    BTRIM('  ' || Name || '  ') AS BothTrimmed
+FROM Client
+WHERE Id <= 20
+ORDER BY Id;
 
 -- 7. Пункт Дата и время
-SELECT '--- 7. DATE FUNCTIONS ---' AS query_type;
 SELECT 
     Id, 
     DatePurchase,
@@ -244,7 +416,6 @@ LIMIT 10;
 --
 
 -- 8. Пункт Агрегатные функции GROUP BY, HAVING
-SELECT '--- 8. AGGREGATE FUNCTIONS ---' AS query_type;
 SELECT 
     c.Id, 
     c.Name || ' ' || c.LastName AS FullName,

@@ -1,0 +1,6 @@
+﻿  Lab1 _8.cpp
+  Lab1_4.cpp
+  Создание кода...
+Lab1_3.obj : error LNK2005: main уже определен в Lab1 _8.obj
+Lab1_4.obj : error LNK2005: main уже определен в Lab1 _8.obj
+C:\projects\3Sem2Part\Pract\Parrarel\Lab1\x64\Debug\Lab1.exe : fatal error LNK1169: обнаружен многократно определенный символ - один или более

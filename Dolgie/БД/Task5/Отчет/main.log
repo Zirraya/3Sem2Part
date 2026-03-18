@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.7)  6 MAR 2026 14:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.7)  13 MAR 2026 16:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1834,102 +1834,42 @@ Overfull \hbox (32.98251pt too wide) in paragraph at lines 291--291
 
 
 [5]
-LaTeX Font Info:    Font shape `T2A/Tempora-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 328.
+Overfull \hbox (6.51358pt too wide) in paragraph at lines 361--361
+[]\T2A/pcr/m/n/14.4 CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber); 
+ []
+
 
 
 [6
 
 ]
-Overfull \hbox (6.51358pt too wide) in paragraph at lines 428--428
-[]\T2A/pcr/m/n/14.4 CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber); 
- []
-
-
-Overfull \hbox (76.46356pt too wide) in paragraph at lines 438--438
-[]\T2A/pcr/m/n/8 "    ->  Index Only Scan using idx_client_phone_unique on public.client  (cost=0.27..4.28 rows=1 width=0) (actual time=0.603..0.603 rows=1 loops=1)"[] 
+Overfull \hbox (2.23537pt too wide) in paragraph at lines 382--382
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_account_date_status ON Account(DatePurchase, Status); 
  []
 
 
 
 [7]
-Overfull \hbox (6.18628pt too wide) in paragraph at lines 470--470
-[]\T2A/pcr/m/n/8 "  ->  Bitmap Index Scan on idx_account_paid  (cost=0.00..20.87 rows=120 width=0) (actual time=0.016..0.016 rows=122 loops=1)"[] 
+LaTeX Font Info:    Font shape `T2A/Tempora-TLF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 451.
+
+Overfull \hbox (12.43208pt too wide) in paragraph at lines 475--475
+[]        \T2A/pcr/m/n/14.4 WHEN NumberPurchase BETWEEN 5 AND 15 THEN \TS1/pcr/m/n/14.4 '\T2A/pcr/m/n/14.4 Постоянный клиент\TS1/pcr/m/n/14.4 '[] 
  []
 
 
-Overfull \hbox (2.23537pt too wide) in paragraph at lines 481--481
-[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_account_date_status ON Account(DatePurchase, Status); 
- []
-
-
-Overfull \hbox (6.18628pt too wide) in paragraph at lines 493--493
-[]\T2A/pcr/m/n/8 "  ->  Bitmap Index Scan on idx_account_paid  (cost=0.00..20.87 rows=120 width=0) (actual time=0.018..0.018 rows=122 loops=1)"[] 
+Overfull \hbox (80.88638pt too wide) in paragraph at lines 486--486
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_client_vip_covering ON Client(Id, Name, LastName, NumberPurchase) 
  []
 
 
 
 [8]
-Overfull \hbox (110.57051pt too wide) in paragraph at lines 562--562
-[]\T2A/pcr/m/n/8 "                    ->  Index Only Scan using idx_flowers_covering on public.flowers  (cost=0.14..12.31 rows=12 width=59) (actual time=0.425..0.434 rows=12 loops=1)"[] 
- []
 
-
-Overfull \hbox (120.84856pt too wide) in paragraph at lines 566--566
-[]\T2A/pcr/m/n/8 "                    ->  Index Only Scan using idx_bouquet_covering on public.bouquet  (cost=0.14..12.29 rows=10 width=50) (actual time=0.197..0.203 rows=10 loops=1)"[] 
- []
-
-
-
-[9]
-
-[10]
-
-[11]
-Overfull \hbox (12.43208pt too wide) in paragraph at lines 715--715
-[]        \T2A/pcr/m/n/14.4 WHEN NumberPurchase BETWEEN 5 AND 15 THEN \TS1/pcr/m/n/14.4 '\T2A/pcr/m/n/14.4 Постоянный клиент\TS1/pcr/m/n/14.4 '[] 
- []
-
-
-Overfull \hbox (557.06575pt too wide) in paragraph at lines 728--728
-[]\T2A/pcr/m/n/8 "  Output: name, lastname, numberpurchase, (CASE WHEN ((numberpurchase >= 5) AND (numberpurchase <= 15)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Постоянный клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text WHEN ((numberpurchase >= 16) AND (numberpurchase <= 25)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 VIP-клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text ELSE \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Супер-VIP\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text END)"[] 
- []
-
-
-Overfull \hbox (561.78682pt too wide) in paragraph at lines 733--733
-[]\T2A/pcr/m/n/8 "        Output: name, lastname, numberpurchase, CASE WHEN ((numberpurchase >= 5) AND (numberpurchase <= 15)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Постоянный клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text WHEN ((numberpurchase >= 16) AND (numberpurchase <= 25)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 VIP-клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text ELSE \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Супер-VIP\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text END"[] 
- []
-
-
-Overfull \hbox (80.88638pt too wide) in paragraph at lines 744--744
-[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_client_vip_covering ON Client(Id, Name, LastName, NumberPurchase) 
- []
-
-
-Overfull \hbox (557.06575pt too wide) in paragraph at lines 751--751
-[]\T2A/pcr/m/n/8 "  Output: name, lastname, numberpurchase, (CASE WHEN ((numberpurchase >= 5) AND (numberpurchase <= 15)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Постоянный клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text WHEN ((numberpurchase >= 16) AND (numberpurchase <= 25)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 VIP-клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text ELSE \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Супер-VIP\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text END)"[] 
- []
-
-
-Overfull \hbox (84.73238pt too wide) in paragraph at lines 755--755
-[]\T2A/pcr/m/n/8 "  ->  Index Only Scan using idx_client_vip_covering on public.client  (cost=0.26..20.69 rows=17 width=59) (actual time=0.028..0.058 rows=17 loops=1)"[] 
- []
-
-
-Overfull \hbox (561.78682pt too wide) in paragraph at lines 756--756
-[]\T2A/pcr/m/n/8 "        Output: name, lastname, numberpurchase, CASE WHEN ((numberpurchase >= 5) AND (numberpurchase <= 15)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Постоянный клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text WHEN ((numberpurchase >= 16) AND (numberpurchase <= 25)) THEN \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 VIP-клиент\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text ELSE \TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 Супер-VIP\TS1/pcr/m/n/8 '\T2A/pcr/m/n/8 ::text END"[] 
- []
-
-
-
-[12]
-
-[13]
-
-[14
+[9
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20260306141951 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
+runsystem(latexminted cleantemp  --timestamp 20260313165219 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
 
  (./main.aux)
  ***********
@@ -1944,18 +1884,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 5B76526FAEA25C12D97A1D6DF980FD83;2791.
  ) 
 Here is how much of TeX's memory you used:
- 23045 strings out of 473250
- 420475 string characters out of 5722014
- 922294 words of memory out of 5000000
- 45884 multiletter control sequences out of 15000+600000
- 576842 words of font info for 52 fonts, out of 8000000 for 9000
+ 23038 strings out of 473250
+ 420421 string characters out of 5722014
+ 912294 words of memory out of 5000000
+ 45883 multiletter control sequences out of 15000+600000
+ 576250 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,5n,96p,592b,711s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on main.pdf (14 pages, 195612 bytes).
+ 90i,6n,96p,592b,711s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on main.pdf (9 pages, 144695 bytes).
 PDF statistics:
- 160 PDF objects out of 1000 (max. 8388607)
- 130 compressed objects within 2 object streams
- 28 named destinations out of 1000 (max. 500000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 110 compressed objects within 2 object streams
+ 23 named destinations out of 1000 (max. 500000)
  105 words of extra memory for PDF output out of 10000 (max. 10000000)
 

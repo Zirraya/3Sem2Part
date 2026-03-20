@@ -175,14 +175,13 @@ LIMIT 100;
 
 -- ЗАПРОСЫ -- 
 -- 1. Пункт Соеденения
---SET enable_seqscan = OFF;
---SET enable_bitmapscan = OFF;  -- отключить битмап-сканирование
---SET enable_indexonlyscan = ON; -- разрешить index-only сканы
+SET enable_seqscan = ON;
+SET enable_bitmapscan = ON;  -- отключить битмап-сканирование
+SET enable_indexonlyscan = OFF; -- разрешить index-only сканы
 
 SELECT a.Id, a.DatePurchase, a.Summ, c.Name, c.LastName
 FROM Account a
 INNER JOIN Client c ON a.IdClient = c.Id
-
 --
 SELECT c.Name, c.LastName, a.Id AS CheckId, a.DatePurchase, a.Summ
 FROM Client c
@@ -235,7 +234,6 @@ SELECT Name AS ItemName, 'Flower' AS ItemType FROM Flowers
 UNION
 SELECT Name, 'Bouquet' FROM Bouquet
 ORDER BY ItemName
-LIMIT 20;
 --
 SELECT Name AS ItemName, 'Flower' AS ItemType
 FROM Flowers
@@ -911,7 +909,6 @@ GROUP BY GROUPING SETS (
     () -- общий итог
 )
 ORDER BY ClientName, GoodsType
-LIMIT 30;
 --
 -- Фильтрация групп с HAVING (сложные условия)
 SELECT 
@@ -946,7 +943,6 @@ JOIN Account a ON c.Id = a.IdClient
 GROUP BY c.Id, c.Name, c.LastName
 HAVING COUNT(*) > 0
 ORDER BY TotalPurchases DESC
-LIMIT 15;
 --
 -- Группировка по нескольким полям с вычисляемыми колонками
 SELECT 

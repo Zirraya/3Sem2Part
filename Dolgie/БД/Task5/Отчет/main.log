@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.7)  13 MAR 2026 16:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.7)  20 MAR 2026 12:10
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1834,42 +1834,315 @@ Overfull \hbox (32.98251pt too wide) in paragraph at lines 291--291
 
 
 [5]
-Overfull \hbox (6.51358pt too wide) in paragraph at lines 361--361
-[]\T2A/pcr/m/n/14.4 CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber); 
- []
-
+<Снимок экрана 2026-03-20 110514.png, id=81, 791.20593pt x 274.02374pt>
+File: Снимок экрана 2026-03-20 110514.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110514.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110514.png  used on input line 327.
+(pdftex.def)             Requested size: 483.69687pt x 167.52219pt.
+<Снимок экрана 2026-03-20 110402.png, id=83, 1218.80344pt x 246.1697pt>
+File: Снимок экрана 2026-03-20 110402.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110402.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110402.png  used on input line 332.
+(pdftex.def)             Requested size: 483.69687pt x 97.69609pt.
+<Снимок экрана 2026-03-19 221955.png, id=84, 742.27313pt x 378.66469pt>
+File: Снимок экрана 2026-03-19 221955.png Graphic file (type png)
+<use Снимок экрана 2026-03-19 221955.png>
+Package pdftex.def Info: Снимок экрана 2026-03-19 221955.png  used on input line 342.
+(pdftex.def)             Requested size: 483.69687pt x 246.75893pt.
 
 
 [6
 
-]
-Overfull \hbox (2.23537pt too wide) in paragraph at lines 382--382
-[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_account_date_status ON Account(DatePurchase, Status); 
+ <./Снимок экрана 2026-03-20 110514.png> <./Снимок экрана 2026-03-20 110402.png>]
+<Снимок экрана 2026-03-20 002311.png, id=94, 1225.57875pt x 235.63031pt>
+File: Снимок экрана 2026-03-20 002311.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 002311.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 002311.png  used on input line 347.
+(pdftex.def)             Requested size: 483.69687pt x 92.99564pt.
+<Снимок экрана 2026-03-20 110712.png, id=95, 1177.39874pt x 301.125pt>
+File: Снимок экрана 2026-03-20 110712.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110712.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110712.png  used on input line 369.
+(pdftex.def)             Requested size: 483.69687pt x 123.70557pt.
+<Снимок экрана 2026-03-20 110654.png, id=96, 1225.57875pt x 215.30438pt>
+File: Снимок экрана 2026-03-20 110654.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110654.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110654.png  used on input line 373.
+(pdftex.def)             Requested size: 483.69687pt x 84.97366pt.
+
+
+[7 <./Снимок экрана 2026-03-19 221955.png> <./Снимок экрана 2026-03-20 002311.png> <./Снимок экрана 2026-03-20 110712.png>]
+Overfull \hbox (6.51358pt too wide) in paragraph at lines 379--379
+[]\T2A/pcr/m/n/14.4 CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber); 
+ []
+
+<Снимок экрана 2026-03-20 002524.png, id=108, 1233.85968pt x 342.5297pt>
+File: Снимок экрана 2026-03-20 002524.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 002524.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 002524.png  used on input line 383.
+(pdftex.def)             Requested size: 483.69687pt x 134.27594pt.
+<Снимок экрана 2026-03-20 002403.png, id=109, 1225.57875pt x 231.86626pt>
+File: Снимок экрана 2026-03-20 002403.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 002403.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 002403.png  used on input line 387.
+(pdftex.def)             Requested size: 483.69687pt x 91.51009pt.
+
+
+[8 <./Снимок экрана 2026-03-20 110654.png> <./Снимок экрана 2026-03-20 002524.png> <./Снимок экрана 2026-03-20 002403.png>]
+<Снимок экрана 2026-03-20 110904.png, id=120, 1102.87032pt x 209.28188pt>
+File: Снимок экрана 2026-03-20 110904.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110904.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110904.png  used on input line 421.
+(pdftex.def)             Requested size: 483.69687pt x 91.78731pt.
+<Снимок экрана 2026-03-20 110842.png, id=121, 1226.33156pt x 188.20313pt>
+File: Снимок экрана 2026-03-20 110842.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 110842.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 110842.png  used on input line 425.
+(pdftex.def)             Requested size: 483.69687pt x 74.23172pt.
+
+Overfull \hbox (72.75233pt too wide) in paragraph at lines 430--430
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_account_date_status_composite ON Account(DatePurchase, Status); 
+ []
+
+<Снимок экрана 2026-03-20 005057.png, id=122, 787.44188pt x 158.84344pt>
+File: Снимок экрана 2026-03-20 005057.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 005057.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 005057.png  used on input line 435.
+(pdftex.def)             Requested size: 483.69687pt x 97.57057pt.
+<Снимок экрана 2026-03-20 004915.png, id=123, 1242.14063pt x 358.33875pt>
+File: Снимок экрана 2026-03-20 004915.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 004915.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 004915.png  used on input line 439.
+(pdftex.def)             Requested size: 483.69687pt x 139.5383pt.
+<Снимок экрана 2026-03-20 111146.png, id=124, 1223.32031pt x 296.60812pt>
+File: Снимок экрана 2026-03-20 111146.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111146.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111146.png  used on input line 455.
+(pdftex.def)             Requested size: 483.69687pt x 117.27432pt.
+
+
+[9 <./Снимок экрана 2026-03-20 110904.png> <./Снимок экрана 2026-03-20 110842.png> <./Снимок экрана 2026-03-20 005057.png> <./Снимок экрана 2026-03-20 004915.png>]
+<Снимок экрана 2026-03-20 111121.png, id=137, 1216.545pt x 199.49532pt>
+File: Снимок экрана 2026-03-20 111121.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111121.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111121.png  used on input line 459.
+(pdftex.def)             Requested size: 483.69687pt x 79.31879pt.
+<Снимок экрана 2026-03-20 005535.png, id=138, 1224.07312pt x 310.91156pt>
+File: Снимок экрана 2026-03-20 005535.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 005535.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 005535.png  used on input line 469.
+(pdftex.def)             Requested size: 483.69687pt x 122.85852pt.
+<Снимок экрана 2026-03-20 005446.png, id=139, 1235.36531pt x 241.65282pt>
+File: Снимок экрана 2026-03-20 005446.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 005446.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 005446.png  used on input line 473.
+(pdftex.def)             Requested size: 483.69687pt x 94.61664pt.
+
+
+[10 <./Снимок экрана 2026-03-20 111146.png> <./Снимок экрана 2026-03-20 111121.png> <./Снимок экрана 2026-03-20 005535.png> <./Снимок экрана 2026-03-20 005446.png>]
+<Снимок экрана 2026-03-20 111418.png, id=152, 1172.12906pt x 494.59781pt>
+File: Снимок экрана 2026-03-20 111418.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111418.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111418.png  used on input line 509.
+(pdftex.def)             Requested size: 483.69687pt x 204.09958pt.
+<Снимок экрана 2026-03-20 111320.png, id=153, 1224.07312pt x 505.89pt>
+File: Снимок экрана 2026-03-20 111320.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111320.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111320.png  used on input line 514.
+(pdftex.def)             Requested size: 483.69687pt x 199.9054pt.
+
+
+[11 <./Снимок экрана 2026-03-20 111418.png>]
+Overfull \hbox (35.88098pt too wide) in paragraph at lines 519--519
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_typegoods_covering ON TypeGoods(IdTypeGoods, NameType) 
+ []
+
+<Снимок экрана 2026-03-20 101001.png, id=160, 1230.09563pt x 539.76656pt>
+File: Снимок экрана 2026-03-20 101001.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 101001.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 101001.png  used on input line 524.
+(pdftex.def)             Requested size: 483.69687pt x 212.24594pt.
+<Снимок экрана 2026-03-20 100917.png, id=161, 1211.27531pt x 542.025pt>
+File: Снимок экрана 2026-03-20 100917.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 100917.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 100917.png  used on input line 529.
+(pdftex.def)             Requested size: 483.69687pt x 216.44225pt.
+
+
+[12 <./Снимок экрана 2026-03-20 111320.png> <./Снимок экрана 2026-03-20 101001.png> <./Снимок экрана 2026-03-20 100917.png>]
+Overfull \hbox (75.57852pt too wide) in paragraph at lines 545--545
+[]    \T2A/pcr/m/n/14.4 COUNT(*) FILTER (WHERE a.Summ BETWEEN 2000 AND 5000) AS MediumPurchases,[] 
  []
 
 
+Overfull \hbox (150.46092pt too wide) in paragraph at lines 549--549
+[]    \T2A/pcr/m/n/14.4 AVG(a.Summ) FILTER (WHERE a.ProcentDiscount > 0)::NUMERIC(10,2) AS AvgCheckWithDiscount[] 
+ []
 
-[7]
-LaTeX Font Info:    Font shape `T2A/Tempora-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 451.
+<Снимок экрана 2026-03-20 111656.png, id=172, 1221.81468pt x 464.4853pt>
+File: Снимок экрана 2026-03-20 111656.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111656.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111656.png  used on input line 560.
+(pdftex.def)             Requested size: 483.69687pt x 183.8843pt.
+<Снимок экрана 2026-03-20 111556.png, id=173, 1221.06187pt x 353.82187pt>
+File: Снимок экрана 2026-03-20 111556.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 111556.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 111556.png  used on input line 565.
+(pdftex.def)             Requested size: 483.69687pt x 140.16031pt.
 
-Overfull \hbox (12.43208pt too wide) in paragraph at lines 475--475
+
+[13 <./Снимок экрана 2026-03-20 111656.png>]
+Overfull \hbox (74.40715pt too wide) in paragraph at lines 570--570
+[] \T2A/pcr/m/n/14.4 CREATE INDEX idx_client_vip_partial ON Client(Id, Name, LastName, NumberPurchase) 
+ []
+
+<Снимок экрана 2026-03-20 102015.png, id=181, 1218.80344pt x 429.10312pt>
+File: Снимок экрана 2026-03-20 102015.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 102015.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 102015.png  used on input line 576.
+(pdftex.def)             Requested size: 483.69687pt x 170.29594pt.
+<Снимок экрана 2026-03-20 101917.png, id=182, 1217.2978pt x 325.215pt>
+File: Снимок экрана 2026-03-20 101917.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 101917.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 101917.png  used on input line 581.
+(pdftex.def)             Requested size: 483.69687pt x 129.2252pt.
+
+
+[14 <./Снимок экрана 2026-03-20 111556.png> <./Снимок экрана 2026-03-20 102015.png> <./Снимок экрана 2026-03-20 101917.png>]
+Overfull \hbox (87.1941pt too wide) in paragraph at lines 604--604
+[]    \T2A/pcr/m/n/14.4 SUM(a.Summ) / NULLIF(COUNT(DISTINCT c.Id), 0)::NUMERIC(10,2) AS SpentPerClient[] 
+ []
+
+<Снимок экрана 2026-03-20 112222.png, id=194, 1218.05063pt x 328.97906pt>
+File: Снимок экрана 2026-03-20 112222.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 112222.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 112222.png  used on input line 619.
+(pdftex.def)             Requested size: 483.69687pt x 130.64055pt.
+<Снимок экрана 2026-03-20 112204.png, id=195, 1225.57875pt x 322.95656pt>
+File: Снимок экрана 2026-03-20 112204.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 112204.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 112204.png  used on input line 624.
+(pdftex.def)             Requested size: 483.69687pt x 127.46048pt.
+
+
+[15 <./Снимок экрана 2026-03-20 112222.png>]
+Overfull \hbox (131.14085pt too wide) in paragraph at lines 630--630
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_client_vip_covering_partial ON Client(Id, Name, LastName, NumberPurchase) 
+ []
+
+<Снимок экрана 2026-03-20 105954.png, id=202, 1246.6575pt x 436.63126pt>
+File: Снимок экрана 2026-03-20 105954.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 105954.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 105954.png  used on input line 637.
+(pdftex.def)             Requested size: 483.69687pt x 169.41272pt.
+<Снимок экрана 2026-03-20 105911.png, id=203, 1215.03937pt x 308.65312pt>
+File: Снимок экрана 2026-03-20 105911.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 105911.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 105911.png  used on input line 642.
+(pdftex.def)             Requested size: 483.69687pt x 122.87035pt.
+
+
+[16 <./Снимок экрана 2026-03-20 112204.png> <./Снимок экрана 2026-03-20 105954.png> <./Снимок экрана 2026-03-20 105911.png>]
+Overfull \hbox (75.57852pt too wide) in paragraph at lines 654--654
+[]    \T2A/pcr/m/n/14.4 COUNT(*) FILTER (WHERE a.Summ BETWEEN 2000 AND 5000) AS MediumPurchases,[] 
+ []
+
+
+Overfull \hbox (150.46092pt too wide) in paragraph at lines 658--658
+[]    \T2A/pcr/m/n/14.4 AVG(a.Summ) FILTER (WHERE a.ProcentDiscount > 0)::NUMERIC(10,2) AS AvgCheckWithDiscount[] 
+ []
+
+<Снимок экрана 2026-03-20 112522.png, id=214, 1229.34282pt x 394.47375pt>
+File: Снимок экрана 2026-03-20 112522.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 112522.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 112522.png  used on input line 668.
+(pdftex.def)             Requested size: 483.69687pt x 155.2105pt.
+<Снимок экрана 2026-03-20 112439.png, id=215, 1227.83719pt x 317.68687pt>
+File: Снимок экрана 2026-03-20 112439.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 112439.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 112439.png  used on input line 673.
+(pdftex.def)             Requested size: 483.69687pt x 125.14803pt.
+
+Overfull \hbox (2.71805pt too wide) in paragraph at lines 678--678
+[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_account_status_hash ON Account USING HASH(Status); 
+ []
+
+<Снимок экрана 2026-03-20 104940.png, id=216, 1229.34282pt x 391.4625pt>
+File: Снимок экрана 2026-03-20 104940.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 104940.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 104940.png  used on input line 682.
+(pdftex.def)             Requested size: 483.69687pt x 154.02568pt.
+
+
+[17
+
+ <./Снимок экрана 2026-03-20 112522.png> <./Снимок экрана 2026-03-20 112439.png>]
+<Снимок экрана 2026-03-20 104909.png, id=225, 1221.81468pt x 330.48468pt>
+File: Снимок экрана 2026-03-20 104909.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 104909.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 104909.png  used on input line 687.
+(pdftex.def)             Requested size: 483.69687pt x 130.83502pt.
+<Снимок экрана 2026-03-20 113120.png, id=226, 779.91376pt x 203.25937pt>
+File: Снимок экрана 2026-03-20 113120.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 113120.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 113120.png  used on input line 701.
+(pdftex.def)             Requested size: 483.69687pt x 126.05981pt.
+<Снимок экрана 2026-03-20 113045.png, id=227, 1221.81468pt x 189.70876pt>
+File: Снимок экрана 2026-03-20 113045.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 113045.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 113045.png  used on input line 706.
+(pdftex.def)             Requested size: 483.69687pt x 75.10347pt.
+
+
+[18 <./Снимок экрана 2026-03-20 104940.png> <./Снимок экрана 2026-03-20 104909.png> <./Снимок экрана 2026-03-20 113120.png> <./Снимок экрана 2026-03-20 113045.png>]
+<Снимок экрана 2026-03-20 103826.png, id=240, 582.67688pt x 292.09125pt>
+File: Снимок экрана 2026-03-20 103826.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 103826.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 103826.png  used on input line 715.
+(pdftex.def)             Requested size: 483.69687pt x 242.48022pt.
+<Снимок экрана 2026-03-20 103742.png, id=241, 1212.78094pt x 131.74219pt>
+File: Снимок экрана 2026-03-20 103742.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 103742.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 103742.png  used on input line 720.
+(pdftex.def)             Requested size: 483.69687pt x 52.54315pt.
+
+Overfull \hbox (12.43208pt too wide) in paragraph at lines 731--731
 []        \T2A/pcr/m/n/14.4 WHEN NumberPurchase BETWEEN 5 AND 15 THEN \TS1/pcr/m/n/14.4 '\T2A/pcr/m/n/14.4 ���������� ������\TS1/pcr/m/n/14.4 '[] 
  []
 
+<Снимок экрана 2026-03-20 121006.png, id=242, 665.48625pt x 235.63031pt>
+File: Снимок экрана 2026-03-20 121006.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 121006.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 121006.png  used on input line 740.
+(pdftex.def)             Requested size: 483.69687pt x 171.26443pt.
 
-Overfull \hbox (80.88638pt too wide) in paragraph at lines 486--486
-[]\T2A/pcr/m/n/14.4 CREATE INDEX idx_client_vip_covering ON Client(Id, Name, LastName, NumberPurchase) 
+
+[19 <./Снимок экрана 2026-03-20 103826.png> <./Снимок экрана 2026-03-20 103742.png>]
+<Снимок экрана 2026-03-20 105721.png, id=252, 1221.81468pt x 350.81062pt>
+File: Снимок экрана 2026-03-20 105721.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 105721.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 105721.png  used on input line 745.
+(pdftex.def)             Requested size: 483.69687pt x 138.88182pt.
+
+Overfull \hbox (23.43092pt too wide) in paragraph at lines 750--750
+[]  \T2A/pcr/m/n/14.4 CREATE INDEX idx_client_regular_name_hash ON Client USING HASH(Name) 
  []
 
+<Снимок экрана 2026-03-20 105752.png, id=253, 547.2947pt x 172.39406pt>
+File: Снимок экрана 2026-03-20 105752.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 105752.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 105752.png  used on input line 756.
+(pdftex.def)             Requested size: 483.69687pt x 152.36223pt.
+File: Снимок экрана 2026-03-20 105721.png Graphic file (type png)
+<use Снимок экрана 2026-03-20 105721.png>
+Package pdftex.def Info: Снимок экрана 2026-03-20 105721.png  used on input line 761.
+(pdftex.def)             Requested size: 483.69687pt x 138.88182pt.
 
 
-[8]
+[20 <./Снимок экрана 2026-03-20 121006.png> <./Снимок экрана 2026-03-20 105721.png> <./Снимок экрана 2026-03-20 105752.png>]
 
-[9
-
-]
-runsystem(latexminted cleantemp  --timestamp 20260313165219 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
+[21]
+runsystem(latexminted cleantemp  --timestamp 20260320121034 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
 
  (./main.aux)
  ***********
@@ -1884,18 +2157,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 5B76526FAEA25C12D97A1D6DF980FD83;2791.
  ) 
 Here is how much of TeX's memory you used:
- 23038 strings out of 473250
- 420421 string characters out of 5722014
+ 23374 strings out of 473250
+ 436058 string characters out of 5722014
  912294 words of memory out of 5000000
- 45883 multiletter control sequences out of 15000+600000
- 576250 words of font info for 50 fonts, out of 8000000 for 9000
+ 46168 multiletter control sequences out of 15000+600000
+ 573300 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  90i,6n,96p,592b,711s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tempora/Tempora-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on main.pdf (9 pages, 144695 bytes).
+Output written on main.pdf (21 pages, 1589998 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
- 110 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 315 PDF objects out of 1000 (max. 8388607)
+ 201 compressed objects within 3 object streams
+ 75 named destinations out of 1000 (max. 500000)
+ 300 words of extra memory for PDF output out of 10000 (max. 10000000)
 

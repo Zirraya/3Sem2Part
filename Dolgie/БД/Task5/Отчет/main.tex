@@ -323,13 +323,29 @@ FROM Account a
 
 INNER JOIN Client c ON a.IdClient = c.Id;
 
+\begin{figure} [H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110514.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110402.png}
+\end{figure}
+
+
 
 \begin{verbatim}
-CREATE INDEX idx_account_idclient ON Account(IdClient);
+CREATE INDEX idx_account_idclient_btree ON Account(IdClient);
 \end{verbatim}
 
-\begin
+\begin{figure} [H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-19 221955.png}
+\end{figure}
 
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 002311.png}
+\end{figure}
 
 
 
@@ -341,26 +357,35 @@ CREATE INDEX idx_account_idclient ON Account(IdClient);
 предотвращая дублирование значений. 
 Такой индекс автоматически создаётся при определении ограничения UNIQUE для таблицы.
 
+SELECT Name AS ItemName, 'Flower' AS ItemType FROM Flowers
 
--- Проверка, занят ли номер 
+UNION
 
-EXPLAIN ANALYZE
+SELECT Name, 'Bouquet' FROM Bouquet
 
-SELECT EXISTS(
+ORDER BY ItemName
 
-    SELECT 1 FROM Client 
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110712.png}
+\end{figure}
 
-    WHERE PhoneNumber = '+7(999)123-45-67'
-);
-
---
-
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110654.png}
+\end{figure}
 
 
 
 \begin{verbatim}
 CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber);
 \end{verbatim}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 002524.png}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 002403.png}
+\end{figure}
 
 
         \subsection{Составной B-Tree индекс}
@@ -372,21 +397,50 @@ CREATE UNIQUE INDEX idx_client_phone_unique ON Client(PhoneNumber);
 столбцы индекса. В данном случае, индекс оптимален для поиска по дате, 
 а затем по статусу, или только по дате.
 
-EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
+-- Статистика по дням недели
 
-SELECT * FROM Account
+SELECT 
 
-WHERE DatePurchase > '2024-01-01' AND Status = 'оплачено';
+    EXTRACT(DOW FROM DatePurchase) AS DayOfWeek,
+
+    COUNT(*) AS PurchasesCount,
+
+    SUM(Summ) AS TotalSum,
+
+    AVG(Summ)::NUMERIC(10,2) AS AvgSum
+
+FROM Account
+
+WHERE DatePurchase IS NOT NULL
+
+GROUP BY EXTRACT(DOW FROM DatePurchase)
+
+ORDER BY DayOfWeek;
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110904.png}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 110842.png}
+\end{figure}
 
 
 \begin{verbatim}
-CREATE INDEX idx_account_date_status ON Account(DatePurchase, Status);
+CREATE INDEX idx_account_date_status_composite ON Account(DatePurchase, Status);
 \end{verbatim}
 
 
-        \subsection{Индекс с выражениями}
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 005057.png}
+\end{figure}
 
-EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 004915.png}
+\end{figure}
+
+
+        \subsection{Индекс с выражениями}
 
 SELECT Name AS ItemName, 'Flower' AS ItemType FROM Flowers
 
@@ -396,14 +450,28 @@ SELECT Name, 'Bouquet' FROM Bouquet
 
 ORDER BY ItemName
 
-LIMIT 20;
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111146.png}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111121.png}
+\end{figure}
     
 
-
-
 \begin{verbatim}
- CREATE INDEX idx_flowers_name_upper ON Flowers(UPPER(Name));   
+CREATE INDEX idx_flowers_name_upper ON Flowers(UPPER(Name));  
 \end{verbatim}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 005535.png}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 005446.png}
+\end{figure}
 
        
 
@@ -417,30 +485,49 @@ LIMIT 20;
 но нужны для выборки.
 
 \begin{verbatim}
-    EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
 SELECT 
-    c.Id, 
-    c.Name || ' ' || c.LastName AS FullName,
-    COUNT(a.Id) AS TotalChecks,
-    SUM(a.Summ) AS TotalSpent,
-    AVG(a.Summ) AS AverageCheckSum,
-    MIN(a.Summ) AS MinCheckSum,
-    MAX(a.Summ) AS MaxCheckSum
-FROM Client c
-LEFT JOIN Account a ON c.Id = a.IdClient
-GROUP BY c.Id, c.Name, c.LastName
-HAVING COUNT(a.Id) > 0
-ORDER BY TotalSpent DESC;
+    COALESCE(c.Name, 'Все клиенты') AS ClientName,
+    COALESCE(tg.NameType, 'Все типы') AS GoodsType,
+    COUNT(*) AS ItemsSold,
+    SUM(gc.Price) AS TotalRevenue
+FROM GoodsCheck gc
+JOIN Account a ON gc.IdCheck = a.Id
+JOIN Client c ON a.IdClient = c.Id
+JOIN AnotherGoods ag ON gc.IdAnotherGoods = ag.Id
+JOIN Goods g ON ag.Id = g.IdAnotherGoods
+JOIN TypeGoods tg ON g.IdType = tg.IdTypeGoods
+GROUP BY GROUPING SETS (
+    (c.Name), -- по клиентам
+    (tg.NameType), -- по типам товаров
+    (c.Name, tg.NameType), -- по комбинации
+    () -- общий итог
+)
 \end{verbatim}
 
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111418.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111320.png}
+\end{figure}
     
 
 \begin{verbatim}
-    CREATE INDEX idx_client_covering ON Client(Id, Name, 
-    LastName, NumberPurchase) 
-INCLUDE (Otchestvo, PhoneNumber);
+CREATE INDEX idx_typegoods_covering ON TypeGoods(IdTypeGoods, NameType)
+INCLUDE ();
 \end{verbatim}
 
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 101001.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 100917.png}
+\end{figure}
  
         \subsection{Частичный индекс}
 Частичный индекс — это индекс, построенный только для подмножества строк таблицы, 
@@ -449,18 +536,51 @@ INCLUDE (Otchestvo, PhoneNumber);
 соответствующих этому условию, так как индексирует только интересующую 
 нас часть таблицы.
 
-        {\scriptsize
+        
   \begin{verbatim}
-    
+  SELECT 
+    c.Name || ' ' || c.LastName AS FullName,
+    COUNT(*) AS TotalPurchases,
+    COUNT(*) FILTER (WHERE a.Summ < 2000) AS SmallPurchases,
+    COUNT(*) FILTER (WHERE a.Summ BETWEEN 2000 AND 5000) AS MediumPurchases,
+    COUNT(*) FILTER (WHERE a.Summ > 5000) AS LargePurchases,
+    SUM(a.Summ) FILTER (WHERE a.Status = 'возврат') AS ReturnedSum,
+    SUM(a.Summ) FILTER (WHERE a.Status = 'оплачено') AS PaidSum,
+    AVG(a.Summ) FILTER (WHERE a.ProcentDiscount > 0)::NUMERIC(10,2) AS AvgCheckWithDiscount
+FROM Client c
+JOIN Account a ON c.Id = a.IdClient
+GROUP BY c.Id, c.Name, c.LastName
+HAVING COUNT(*) > 0
+ORDER BY TotalPurchases DESC
+LIMIT 15;  
   \end{verbatim}
-  } 
 
 
-  {\scriptsize
+   \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111656.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 111556.png}
+\end{figure}
+
+
   \begin{verbatim}
-    
+ CREATE INDEX idx_client_vip_partial ON Client(Id, Name, LastName, NumberPurchase) 
+WHERE NumberPurchase > 25;   
   \end{verbatim}
-  } 
+
+
+  \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 102015.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 101917.png}
+\end{figure}
+
 
         \subsection{Частичный покрывающий индекс}
 Это комбинация частичного индекса и покрывающего индекса 
@@ -470,72 +590,177 @@ INCLUDE (Otchestvo, PhoneNumber);
 который при этом содержит все данные для запроса, исключая обращение к таблице.
 
 \begin{verbatim}
- EXPLAIN (ANALYZE, VERBOSE, BUFFERS)
-SELECT Name, LastName, NumberPurchase,
+SELECT 
     CASE 
-        WHEN NumberPurchase BETWEEN 5 AND 15 THEN 'Постоянный клиент'
-        WHEN NumberPurchase BETWEEN 16 AND 25 THEN 'VIP-клиент'
-        ELSE 'Супер-VIP'
-    END AS ClientCategory
-FROM Client
-WHERE NumberPurchase > 25
-ORDER BY NumberPurchase DESC;
+        WHEN c.NumberPurchase < 10 THEN 'Новичок'
+        WHEN c.NumberPurchase < 20 THEN 'Регулярный'
+        WHEN c.NumberPurchase < 30 THEN 'Постоянный'
+        ELSE 'VIP'
+    END AS ClientCategory,
+    COUNT(DISTINCT c.Id) AS ClientCount,
+    COUNT(a.Id) AS TotalPurchases,
+    SUM(a.Summ) AS TotalSpent,
+    AVG(a.Summ)::NUMERIC(10,2) AS AvgCheck,
+    SUM(a.Summ) / NULLIF(COUNT(DISTINCT c.Id), 0)::NUMERIC(10,2) AS SpentPerClient
+FROM Client c
+LEFT JOIN Account a ON c.Id = a.IdClient
+GROUP BY 
+    CASE 
+        WHEN c.NumberPurchase < 10 THEN 'Новичок'
+        WHEN c.NumberPurchase < 20 THEN 'Регулярный'
+        WHEN c.NumberPurchase < 30 THEN 'Постоянный'
+        ELSE 'VIP'
+    END
+ORDER BY 
+    MIN(c.NumberPurchase);
 \end{verbatim}
+
+ \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 112222.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 112204.png}
+\end{figure}
+
 
 
 \begin{verbatim}
-CREATE INDEX idx_client_vip_covering ON Client(Id, Name, LastName, NumberPurchase) 
+CREATE INDEX idx_client_vip_covering_partial ON Client(Id, Name, LastName, NumberPurchase) 
 INCLUDE (Otchestvo, PhoneNumber) 
 WHERE NumberPurchase > 25;
 \end{verbatim}
 
+
+  \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 105954.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 105911.png}
+\end{figure}
+
     \section{Hash индексы}
     \subsection{Простой Hash индекс}
 
-    {\scriptsize
-  \begin{verbatim}
-    
+
+      \begin{verbatim}
+SELECT 
+    c.Name || ' ' || c.LastName AS FullName,
+    COUNT(*) AS TotalPurchases,
+    COUNT(*) FILTER (WHERE a.Summ < 2000) AS SmallPurchases,
+    COUNT(*) FILTER (WHERE a.Summ BETWEEN 2000 AND 5000) AS MediumPurchases,
+    COUNT(*) FILTER (WHERE a.Summ > 5000) AS LargePurchases,
+    SUM(a.Summ) FILTER (WHERE a.Status = 'возврат') AS ReturnedSum,    
+    SUM(a.Summ) FILTER (WHERE a.Status = 'оплачено') AS PaidSum,     
+    AVG(a.Summ) FILTER (WHERE a.ProcentDiscount > 0)::NUMERIC(10,2) AS AvgCheckWithDiscount
+FROM Client c
+JOIN Account a ON c.Id = a.IdClient
+GROUP BY c.Id, c.Name, c.LastName
+HAVING COUNT(*) > 0
+ORDER BY TotalPurchases DESC; 
   \end{verbatim}
-  } 
 
 
-  {\scriptsize
+   \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 112522.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 112439.png}
+\end{figure}
+
+
   \begin{verbatim}
-    
+CREATE INDEX idx_account_status_hash ON Account USING HASH(Status);
   \end{verbatim}
-  } 
+
+  \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 104940.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 104909.png}
+\end{figure}
 
 
     \subsection{Hash индекс с использованием выражений}
 
-    {\scriptsize
-  \begin{verbatim}
-    
+
+      \begin{verbatim}
+  SELECT Name, LastName, PhoneNumber
+FROM Client
+WHERE Name IN ('Иван', 'Мария', 'Алексей', 'Елена');  
   \end{verbatim}
-  } 
+
+    \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 113120.png}
+\end{figure}
 
 
-  {\scriptsize
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 113045.png}
+\end{figure}
+
+
   \begin{verbatim}
-    
+  CREATE INDEX idx_client_name_hash ON Client USING HASH(Name);  
   \end{verbatim}
-  } 
+
+  \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 103826.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 103742.png}
+\end{figure}
+
 
     \subsection{Частичный Hash индекс}
 
 
-    {\scriptsize
+
   \begin{verbatim}
-    
+ SELECT Name, LastName, NumberPurchase,
+    CASE 
+        WHEN NumberPurchase BETWEEN 5 AND 15 THEN 'Постоянный клиент'    
+        WHEN NumberPurchase BETWEEN 16 AND 25 THEN 'VIP-клиент'
+        ELSE 'Супер-VIP'
+    END AS ClientCategory
+FROM Client
+ORDER BY NumberPurchase DESC;   
   \end{verbatim}
-  } 
+
+    \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 121006.png}
+\end{figure}
 
 
-  {\scriptsize
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 105721.png}
+\end{figure}
+
+
   \begin{verbatim}
-    
+  CREATE INDEX idx_client_regular_name_hash ON Client USING HASH(Name) 
+WHERE NumberPurchase BETWEEN 10 AND 20;  
   \end{verbatim}
-  } 
+
+
+  \begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 105752.png}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{Снимок экрана 2026-03-20 105721.png}
+\end{figure}
+
    
     \appendix
      

@@ -4,46 +4,44 @@
 -- 1. ПРОСТЫЕ ИНДЕКСЫ (B-Tree и Hash)
 -- ===================================================
 
--- B-Tree простой индекс для соединений (JOIN)
+-- B-Tree простой индекс для соединений (JOIN) и вложенных запросов
 CREATE INDEX idx_account_idclient_btree ON Account(IdClient);
 
--- Hash простой индекс для точного поиска по телефону
-CREATE INDEX idx_client_phone_hash ON Client USING HASH(PhoneNumber);
+-- Hash простой индекс для поиска по точному соответствию (используется в IN, ANY)
+CREATE INDEX idx_client_name_hash ON Client USING HASH(Name);
+
+-- Hash индекс для поиска по статусу (используется в предикатах)
+CREATE INDEX idx_account_status_hash ON Account USING HASH(Status);
 
 -- 2. УНИКАЛЬНЫЙ ИНДЕКС (только B-Tree)
 -- ===================================================
-CREATE UNIQUE INDEX idx_client_phone_unique_btree ON Client(PhoneNumber);
+CREATE UNIQUE INDEX idx_flowers_name_species_unique ON Flowers(Species, Name);
+
 
 -- 3. СОСТАВНОЙ ИНДЕКС (только B-Tree)
 -- ===================================================
 -- Для запросов с фильтрацией по дате и статусу (BETWEEN, GROUP BY)
 CREATE INDEX idx_account_date_status_composite ON Account(DatePurchase, Status);
+-- Для запросов с GROUP BY и агрегатными функциями
+CREATE INDEX idx_account_client_date_composite ON Account(IdClient, DatePurchase, Summ);
+-- Для запросов с JOIN по нескольким полям
+CREATE INDEX idx_goods_type_composite ON Goods(IdAnotherGoods, IdType, IdBouquet);
 
 -- 4. ИНДЕКСЫ С ИСПОЛЬЗОВАНИЕМ ВЫРАЖЕНИЙ
 -- ===================================================
 -- Для поиска по имени цветка в верхнем регистре (используется в UNION с Flower)
 CREATE INDEX idx_flowers_name_upper ON Flowers(UPPER(Name));
-
 -- Для поиска по фамилии без учета регистра (ILIKE)
 CREATE INDEX idx_client_lastname_upper ON Client(UPPER(LastName));
 
--- Для поиска по cleaned phone number (без форматирования)
-CREATE INDEX idx_client_clean_phone ON Client(REGEXP_REPLACE(PhoneNumber, '[^0-9]', '', 'g'));
-
 -- 5. ПОКРЫВАЮЩИЕ ИНДЕКСЫ (B-Tree)
 -- ===================================================
--- Покрывающий индекс для Client (используется в GROUP BY, агрегатных функциях)
--- Включает все поля, используемые в запросах с агрегацией и конкатенацией
-CREATE INDEX idx_client_covering_full ON Client(Id, Name, LastName, NumberPurchase) 
-INCLUDE (Otchestvo, PhoneNumber);
-
--- Покрывающий индекс для Account (покрывает запросы с датами и суммами)
-CREATE INDEX idx_account_covering_full ON Account(Id, IdClient, DatePurchase, Summ, Status) 
-INCLUDE (ProcentDiscount, SummAll);
-
--- Покрывающий индекс для GoodsCheck (для JOIN с AnotherGoods и Account)
-CREATE INDEX idx_goodscheck_covering_full ON GoodsCheck(Id, IdCheck, IdAnotherGoods, Price) 
-INCLUDE (IdFlower);
+-- Покрывающий индекс для AnotherGoods (используется в JOIN и агрегациях)
+CREATE INDEX idx_anothergoods_covering ON AnotherGoods(Id, Name)
+INCLUDE ();
+-- Покрывающий индекс для TypeGoods (используется в JOIN)
+CREATE INDEX idx_typegoods_covering ON TypeGoods(IdTypeGoods, NameType)
+INCLUDE ();
 
 -- 6. ЧАСТИЧНЫЕ ИНДЕКСЫ
 -- ===================================================
@@ -58,6 +56,10 @@ WHERE NumberPurchase > 25;
 -- Частичный индекс для возвратов (используется в FILTER)
 CREATE INDEX idx_account_refund_partial ON Account(IdClient, Summ) 
 WHERE Status = 'возврат';
+
+
+CREATE INDEX idx_client_regular_name_hash ON Client USING HASH(Name) 
+WHERE NumberPurchase BETWEEN 10 AND 20;  
 
 -- 7. ЧАСТИЧНЫЕ ПОКРЫВАЮЩИЕ ИНДЕКСЫ (сравнение с обычными частичными)
 -- ===================================================
@@ -82,33 +84,6 @@ WHERE Id IN (
     WHERE DatePurchase > CURRENT_DATE - INTERVAL '90 days'
 );
 
--- 8. ДОПОЛНИТЕЛЬНЫЕ ИНДЕКСЫ ДЛЯ СПЕЦИФИЧЕСКИХ ЗАПРОСОВ
--- ===================================================
-
--- Для вложенных запросов и ANY/ALL
-CREATE INDEX idx_account_summ_client ON Account(IdClient, Summ);
-
--- Для UNION и INTERSECT (поиск по имени)
-CREATE INDEX idx_flowers_name ON Flowers(Name);
-CREATE INDEX idx_bouquet_name ON Bouquet(Name);
-
--- Для запросов с датами (AGE, EXTRACT, DATE_TRUNC)
-CREATE INDEX idx_account_date ON Account(DatePurchase);
-
--- Для запросов с GROUP BY и HAVING
-CREATE INDEX idx_client_number_purchase ON Client(NumberPurchase);
-CREATE INDEX idx_account_client_summ ON Account(IdClient, Summ);
-
--- Hash индекс для точного поиска по статусу (используется в FILTER)
-CREATE INDEX idx_account_status_hash ON Account USING HASH(Status);
-
--- Индекс для LIKE 'Пет%' (поддержка left-anchored поиска)
-CREATE INDEX idx_client_lastname_pattern ON Client(LastName text_pattern_ops);
-
--- Индекс для ILIKE '%ов%' (используем триграммы для нечеткого поиска)
-CREATE INDEX idx_client_lastname_trgm ON Client USING gin(LastName gin_trgm_ops);
-CREATE INDEX idx_client_name_trgm ON Client USING gin(Name gin_trgm_ops);
-
 -- Обновление статистики после создания индексов
 ANALYZE Client;
 ANALYZE Account;
@@ -118,5 +93,3 @@ ANALYZE AnotherGoods;
 ANALYZE GoodsCheck;
 ANALYZE TypeGoods;
 ANALYZE FlowersAndBouquet;
-
-

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>3D Конфигуратор - Манекен художника</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            pointer-events: none;
+            z-index: 10;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        
+        .controls-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30,30,40,0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+            z-index: 20;
+            font-family: system-ui, -apple-system, sans-serif;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: auto;
+        }
+        
+        .scale-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(30,30,40,0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 12px;
+            z-index: 20;
+            font-family: system-ui, -apple-system, sans-serif;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: auto;
+            min-width: 180px;
+        }
+        
+        .scale-panel h3 {
+            margin: 0 0 10px 0;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .scale-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .scale-control label {
+            color: white;
+            font-size: 12px;
+        }
+        
+        .scale-control input {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .scale-value {
+            color: #4ade80;
+            font-size: 12px;
+            min-width: 45px;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .reset-scale {
+            width: 100%;
+            background: rgba(100,100,120,0.8);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .reset-scale:hover {
+            background: #4a90e2;
+        }
+        
+        button {
+            background: rgba(100,100,120,0.8);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            background: #4a90e2;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            background: rgba(0,0,0,0.6);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            color: #4ade80;
+        }
+        
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.7);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .controls-panel { padding: 8px 16px; gap: 8px; }
+            button { padding: 6px 12px; font-size: 12px; }
+            .scale-panel { top: 10px; right: 10px; padding: 10px 15px; min-width: 150px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        🎨 3D Конфигуратор | Модель на сетке
+    </div>
+    
+    <div class="scale-panel">
+        <h3>🔍 Масштаб модели</h3>
+        <div class="scale-control">
+            <label>📏 Размер:</label>
+            <input type="range" id="scaleSlider" min="0.1" max="3.0" step="0.01" value="1.0">
+            <span class="scale-value" id="scaleValue">1.00x</span>
+        </div>
+        <button class="reset-scale" id="resetScale">⟳ Сбросить масштаб</button>
+    </div>
+    
+    <div class="controls-panel">
+        <button id="resetView">🔄 Сбросить камеру</button>
+        <button id="toggleWireframe">🔲 Каркасный режим</button>
+        <div class="status" id="modelStatus">⏳ Загрузка модели...</div>
+    </div>
+    
+    <div class="instructions">
+        🖱️ ЛКМ - вращать | ПКМ - панорамировать | Прокрутка - приблизить/отдалить
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        // --- Инициализация сцены ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111122);
+        scene.fog = new THREE.FogExp2(0x111122, 0.008);
+
+        // --- Камера ---
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(5, 4, 6);
+        camera.lookAt(0, 0, 0);
+
+        // --- Рендерер ---
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        document.body.appendChild(renderer.domElement);
+
+        // --- Орбит контролы ---
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.enableZoom = true;
+        controls.enablePan = true;
+        controls.target.set(0, 0, 0);
+        
+        // --- Освещение ---
+        const ambientLight = new THREE.AmbientLight(0x404060, 0.6);
+        scene.add(ambientLight);
+        
+        const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        mainLight.position.set(2, 3, 2);
+        mainLight.castShadow = true;
+        mainLight.receiveShadow = true;
+        mainLight.shadow.mapSize.width = 1024;
+        mainLight.shadow.mapSize.height = 1024;
+        mainLight.shadow.camera.near = 0.5;
+        mainLight.shadow.camera.far = 20;
+        mainLight.shadow.camera.left = -10;
+        mainLight.shadow.camera.right = 10;
+        mainLight.shadow.camera.top = 10;
+        mainLight.shadow.camera.bottom = -10;
+        scene.add(mainLight);
+        
+        const fillLight = new THREE.PointLight(0x4466cc, 0.4);
+        fillLight.position.set(-2, 2, -3);
+        scene.add(fillLight);
+        
+        const backLight = new THREE.PointLight(0xffaa66, 0.5);
+        backLight.position.set(1, 2, -3);
+        scene.add(backLight);
+        
+        const rimLight = new THREE.PointLight(0x88aaff, 0.3);
+        rimLight.position.set(0, -1, 2);
+        scene.add(rimLight);
+        
+        // --- СЕТКА (центрирована на 0) ---
+        const gridHelper = new THREE.GridHelper(20, 40, 0x88aaff, 0x335588);
+        gridHelper.position.y = 0;
+        gridHelper.material.transparent = true;
+        gridHelper.material.opacity = 0.5;
+        scene.add(gridHelper);
+        
+        // Дополнительная сетка для лучшей ориентации
+        const gridHelperSmall = new THREE.GridHelper(8, 20, 0xffaa66, 0x8866aa);
+        gridHelperSmall.position.y = 0.01;
+        gridHelperSmall.material.transparent = true;
+        gridHelperSmall.material.opacity = 0.3;
+        scene.add(gridHelperSmall);
+        
+        // Маркер центра координат (красная сфера)
+        const centerMarker = new THREE.Mesh(
+            new THREE.SphereGeometry(0.08, 16, 16),
+            new THREE.MeshStandardMaterial({ color: 0xff3333, emissive: 0x441111 })
+        );
+        scene.add(centerMarker);
+        
+        // Оси координат
+        const axesHelper = new THREE.AxesHelper(3);
+        axesHelper.material.transparent = true;
+        axesHelper.material.opacity = 0.3;
+        scene.add(axesHelper);
+        
+        // --- Переменные для модели ---
+        let model = null;
+        let originalScale = 1.0;
+        let originalYOffset = 0; // Запоминаем смещение по Y для правильного масштабирования
+        
+        const modelStatus = document.getElementById('modelStatus');
+        const scaleSlider = document.getElementById('scaleSlider');
+        const scaleValue = document.getElementById('scaleValue');
+        
+        // --- Загрузка модели ---
+        const MODEL_PATH = 'models/red_dragon.glb';
+        const loader = new GLTFLoader();
+        
+        console.log('Начинаем загрузку модели:', MODEL_PATH);
+        
+        loader.load(MODEL_PATH, 
+            (gltf) => {
+                model = gltf.scene;
+                
+                // Настройка материалов
+                model.traverse((child) => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        if (child.material) {
+                            if (Array.isArray(child.material)) {
+                                child.material.forEach(mat => {
+                                    mat.roughness = 0.4;
+                                    mat.metalness = 0.1;
+                                });
+                            } else {
+                                child.material.roughness = 0.4;
+                                child.material.metalness = 0.1;
+                            }
+                        }
+                    }
+                });
+                
+                // ========== ПРАВИЛЬНОЕ ЦЕНТРИРОВАНИЕ И ПОЗИЦИОНИРОВАНИЕ ==========
+                // 1. Сначала вычисляем bounding box ПЕРЕД любыми трансформациями
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const minY = box.min.y;
+                
+                console.log('Исходные данные:');
+                console.log('  Центр модели:', center);
+                console.log('  Нижняя точка (minY):', minY);
+                console.log('  Размеры:', size);
+                
+                // 2. Смещаем модель по X и Z так, чтобы центр был над (0,0)
+                //    Но по Y ставим так, чтобы низ модели был на уровне Y=0 (сетка)
+                model.position.x = -center.x;
+                model.position.z = -center.z;
+                model.position.y = -minY;  // Ставим низ модели на уровень сетки
+                
+                // Запоминаем оригинальное смещение по Y для корректного масштабирования
+                originalYOffset = -minY;
+                
+                console.log('После позиционирования:');
+                console.log('  Позиция модели:', model.position);
+                console.log('  Низ модели будет на Y = 0');
+                
+                // 3. Применяем масштабирование (автоматическое)
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const targetSize = 2.0;
+                const autoScale = targetSize / maxDim;
+                
+                originalScale = autoScale;
+                model.scale.set(autoScale, autoScale, autoScale);
+                scaleSlider.value = autoScale;
+                scaleValue.textContent = `${autoScale.toFixed(2)}x`;
+                
+                console.log(`Автомасштаб: ${autoScale.toFixed(2)}x`);
+                
+                scene.add(model);
+                
+                // Настраиваем камеру
+                const distance = targetSize * 2.5;
+                camera.position.set(distance, distance * 0.6, distance);
+                controls.target.set(0, 0, 0);
+                controls.update();
+                
+                modelStatus.innerHTML = '✅ Модель на сетке, в центре координат';
+                modelStatus.style.color = '#4ade80';
+            },
+            (xhr) => {
+                const percent = Math.floor((xhr.loaded / xhr.total) * 100);
+                modelStatus.innerHTML = `📦 Загрузка: ${percent}%`;
+            },
+            (error) => {
+                console.error('Ошибка загрузки модели:', error);
+                modelStatus.innerHTML = '❌ Модель не найдена';
+                modelStatus.style.color = '#ff6b6b';
+                
+                // Тестовая модель для проверки
+                const dummyGroup = new THREE.Group();
+                
+                const geometry = new THREE.BoxGeometry(1.2, 1.8, 0.9);
+                const material = new THREE.MeshStandardMaterial({ color: 0x88aaff, transparent: true, opacity: 0.7 });
+                const dummyModel = new THREE.Mesh(geometry, material);
+                dummyModel.castShadow = true;
+                dummyModel.receiveShadow = true;
+                dummyModel.position.y = 0.9; // Чтобы низ куба был на Y=0
+                dummyGroup.add(dummyModel);
+                
+                const jointMat = new THREE.MeshStandardMaterial({ color: 0xffaa66, emissive: 0x442200 });
+                const jointPositions = [
+                    [0, 1.8, 0], [0, 0.9, 0], [0.6, 1.2, 0], [-0.6, 1.2, 0], [0, 2.0, 0.3]
+                ];
+                
+                jointPositions.forEach(pos => {
+                    const joint = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), jointMat);
+                    joint.position.set(pos[0], pos[1], pos[2]);
+                    joint.castShadow = true;
+                    dummyGroup.add(joint);
+                });
+                
+                model = dummyGroup;
+                scene.add(model);
+                modelStatus.innerHTML = '⚠️ Тестовая модель на сетке';
+                console.warn('Используется тестовая модель');
+            }
+        );
+        
+        // --- Функция изменения масштаба (сохраняет позицию на сетке) ---
+        function updateScale(value) {
+            if (model) {
+                const newScale = parseFloat(value);
+                const scaleRatio = newScale / originalScale;
+                
+                // Масштабируем модель
+                model.scale.set(newScale, newScale, newScale);
+                
+                // Корректируем позицию по Y, чтобы низ модели оставался на сетке
+                // При масштабировании меняется высота модели, нужно скорректировать Y
+                model.position.y = originalYOffset * scaleRatio;
+                
+                currentScale = newScale;
+                scaleValue.textContent = `${newScale.toFixed(2)}x`;
+            }
+        }
+        
+        let currentScale = 1.0;
+        
+        // --- Сброс масштаба ---
+        function resetScale() {
+            if (model) {
+                scaleSlider.value = originalScale.toString();
+                updateScale(originalScale);
+            }
+        }
+        
+        // --- Сброс камеры ---
+        document.getElementById('resetView').addEventListener('click', () => {
+            camera.position.set(5, 4, 6);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        });
+        
+        // --- Сброс масштаба ---
+        document.getElementById('resetScale').addEventListener('click', resetScale);
+        
+        // --- Слайдер масштаба ---
+        scaleSlider.addEventListener('input', (e) => {
+            updateScale(e.target.value);
+        });
+        
+        // --- Переключение каркасного режима ---
+        let wireframeMode = false;
+        document.getElementById('toggleWireframe').addEventListener('click', () => {
+            wireframeMode = !wireframeMode;
+            if (model) {
+                model.traverse((child) => {
+                    if (child.isMesh && child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(mat => mat.wireframe = wireframeMode);
+                        } else {
+                            child.material.wireframe = wireframeMode;
+                        }
+                    }
+                });
+            }
+            const btn = document.getElementById('toggleWireframe');
+            btn.style.background = wireframeMode ? '#4a90e2' : 'rgba(100,100,120,0.8)';
+        });
+        
+        // --- Анимация ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // --- Адаптация под изменение размера окна ---
+        window.addEventListener('resize', onWindowResize);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        console.log('3D сцена инициализирована. Сетка на Y=0, центр координат отмечен красной точкой');
+    </script>
+</body>
+</html>

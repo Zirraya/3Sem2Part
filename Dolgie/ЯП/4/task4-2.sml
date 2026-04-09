@@ -4,7 +4,6 @@ fun f4 (lst : real list) : (real * real) option =
     else
         let
             val h = hd lst
-            (* Recursive helper: processes the tail, accumulates current min and max *)
             fun findMinMax (l : real list) (min : real) (max : real) : (real * real) =
                 if null l then
                     (min, max)

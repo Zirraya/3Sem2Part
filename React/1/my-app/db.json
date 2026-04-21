@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Первый пост",
+      "content": "Содержание первого поста",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "title": "Второй пост",
+      "content": "Содержание второго поста",
+      "userId": 1
+    }
+  ],
+  "comments": [],
+  "products": [
+    {
+      "id": 1,
+      "name": "Товар 1",
+      "price": 1000,
+      "description": "Описание товара"
+    },
+    {
+      "id": 2,
+      "name": "Товар 2",
+      "price": 2000,
+      "description": "Описание другого товара"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "user@example.com",
+      "password": "password123",
+      "firstName": "Иван",
+      "lastName": "Петров",
+      "role": "user"
+    }
+  ]
+}

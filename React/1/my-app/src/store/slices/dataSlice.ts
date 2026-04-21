@@ -58,6 +58,18 @@ const dataSlice = createSlice({
     deletePost: (state, action: PayloadAction<number>) => {
       state.posts = state.posts.filter((p) => p.id !== action.payload);
     },
+    addProduct: (state, action: PayloadAction<IProduct>) => {
+  state.products.push(action.payload);
+},
+updateProduct: (state, action: PayloadAction<IProduct>) => {
+  const index = state.products.findIndex((p) => p.id === action.payload.id);
+  if (index !== -1) {
+    state.products[index] = action.payload;
+  }
+},
+deleteProduct: (state, action: PayloadAction<number>) => {
+  state.products = state.products.filter((p) => p.id !== action.payload);
+},
   },
   extraReducers: (builder) => {
     // Ссылаемся на action из authSlice

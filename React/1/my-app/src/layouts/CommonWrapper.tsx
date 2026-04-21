@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import { hideError } from '../store/slices/settingsSlice';
-import LoadingOverlay from '../components/LoadingOverlay';
+import { LoadingOverlay } from '../components/LoadingOverlay'
 
 const modalStyle = {
   position: 'absolute' as const,

@@ -43,19 +43,19 @@ export const Profile: React.FC = () => {
           </Box>
 
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Typography variant="subtitle2" color="text.secondary">Имя</Typography>
               <Typography variant="body1">{user?.firstName}</Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Typography variant="subtitle2" color="text.secondary">Фамилия</Typography>
               <Typography variant="body1">{user?.lastName}</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Typography variant="subtitle2" color="text.secondary">Email</Typography>
               <Typography variant="body1">{user?.email}</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Typography variant="subtitle2" color="text.secondary">Роль</Typography>
               <Typography variant="body1">
                 {user?.role === 'admin' ? 'Администратор' : 'Пользователь'}

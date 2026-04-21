@@ -6,6 +6,7 @@ import { RootState } from '../store/store';
 import { getRequest, postRequest, putRequest, deleteRequest } from '../services/api';
 import { setPosts, addPost, updatePost, deletePost } from '../store/slices/dataSlice';
 import { CustomButton } from '../ui/CustomButton';
+import { Button } from '@mui/material';
 
 interface IPost {
   id: number;

@@ -12,7 +12,7 @@ export const Landing: React.FC = () => {
         <Typography variant="h2" component="h1" gutterBottom>
           Добро пожаловать!
         </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
+        <Typography sx={{ mb: 2 }} color="text.secondary">
           Ваш универсальный инструмент для управления данными
         </Typography>
         
@@ -38,7 +38,7 @@ export const Landing: React.FC = () => {
 
       <Grid container spacing={4} sx={{ mt: 4 }}>
         {features.map((feature, index) => (
-          <Grid item xs={12} md={4} key={index}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card>
               <CardContent>
                 <Typography variant="h5" gutterBottom>

@@ -14,7 +14,7 @@ export const NotFound: React.FC = () => {
         <Typography variant="h4" gutterBottom>
           Страница не найдена
         </Typography>
-        <Typography color="text.secondary" paragraph>
+        <Typography color="text.secondary" variant="body1" gutterBottom>
           Запрашиваемая страница не существует или была перемещена.
         </Typography>
         <Button variant="contained" onClick={() => navigate('/')}>

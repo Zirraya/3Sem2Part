@@ -1,24 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { logout } from './authSlice';
+import { IPost } from '../../types/post';
 
-interface IDataState {
-  posts: IPost[];
-  comments: IComment[];
-  products: IProduct[];
-}
-
-interface IPost {
-  id: number;
-  title: string;
-  content: string;
-  userId: number;
-}
-
-interface IComment {
-  id: number;
-  text: string;
-  postId: number;
-}
 
 interface IProduct {
   id: number;
@@ -27,60 +9,68 @@ interface IProduct {
   description: string;
 }
 
-const initialState: IDataState = {
+interface DataState {
+  posts: IPost[];
+  products: IProduct[];
+  comments: any[];
+}
+
+const initialState: DataState = {
   posts: [],
-  comments: [],
   products: [],
+  comments: [],
 };
 
 const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    setPosts: (state, action: PayloadAction<IPost[]>) => {
+    setPosts(state, action: PayloadAction<IPost[]>) {
       state.posts = action.payload;
     },
-    setComments: (state, action: PayloadAction<IComment[]>) => {
-      state.comments = action.payload;
-    },
-    setProducts: (state, action: PayloadAction<IProduct[]>) => {
-      state.products = action.payload;
-    },
-    addPost: (state, action: PayloadAction<IPost>) => {
+    addPost(state, action: PayloadAction<IPost>) {
       state.posts.push(action.payload);
     },
-    updatePost: (state, action: PayloadAction<IPost>) => {
-      const index = state.posts.findIndex((p) => p.id === action.payload.id);
+    updatePost(state, action: PayloadAction<IPost>) {
+      const index = state.posts.findIndex(post => post.id === action.payload.id);
       if (index !== -1) {
         state.posts[index] = action.payload;
       }
     },
-    deletePost: (state, action: PayloadAction<number>) => {
-      state.posts = state.posts.filter((p) => p.id !== action.payload);
+    deletePost(state, action: PayloadAction<number>) {
+      state.posts = state.posts.filter(post => post.id !== action.payload);
     },
-    addProduct: (state, action: PayloadAction<IProduct>) => {
-  state.products.push(action.payload);
-},
-updateProduct: (state, action: PayloadAction<IProduct>) => {
-  const index = state.products.findIndex((p) => p.id === action.payload.id);
-  if (index !== -1) {
-    state.products[index] = action.payload;
-  }
-},
-deleteProduct: (state, action: PayloadAction<number>) => {
-  state.products = state.products.filter((p) => p.id !== action.payload);
-},
-  },
-  extraReducers: (builder) => {
-    // Ссылаемся на action из authSlice
-    builder.addCase(logout, (state) => {
-      state.posts = [];
-      state.comments = [];
-      state.products = [];
-    });
+    setProducts(state, action: PayloadAction<IProduct[]>) {
+      state.products = action.payload;
+    },
+    addProduct(state, action: PayloadAction<IProduct>) {
+      state.products.push(action.payload);
+    },
+    updateProduct(state, action: PayloadAction<IProduct>) {
+      const index = state.products.findIndex(product => product.id === action.payload.id);
+      if (index !== -1) {
+        state.products[index] = action.payload;
+      }
+    },
+    deleteProduct(state, action: PayloadAction<number>) {
+      state.products = state.products.filter(product => product.id !== action.payload);
+    },
+    setComments(state, action: PayloadAction<any[]>) {
+      state.comments = action.payload;
+    },
   },
 });
 
-export const { setPosts, setComments, setProducts, addPost, updatePost, deletePost } =
-  dataSlice.actions;
+export const {
+  addPost,
+  deletePost,
+  setPosts,
+  updatePost,
+  setProducts,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  setComments,
+} = dataSlice.actions;
+
 export default dataSlice.reducer;

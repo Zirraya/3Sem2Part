@@ -1,78 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Typography, Box, Grid, Paper, Card, CardContent } from '@mui/material';
+import React from 'react';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { getRequest } from '../services/api';
-import { CustomButton } from '../ui/CustomButton';
-
-interface IStats {
-  totalPosts: number;
-  totalComments: number;
-  totalProducts: number;
-  lastLogin: string;
-}
 
 export const Dashboard: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [stats, setStats] = useState<IStats | null>(null);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      const data = await getRequest<IStats>('/dashboard/stats');
-      setStats(data);
-    };
-    fetchStats();
-  }, []);
+  const { posts, products } = useSelector((state: RootState) => state.data);
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Добро пожаловать, {user?.firstName} {user?.lastName}!
-        </Typography>
-        <Typography color="text.secondary" paragraph>
-          Ваша роль: {user?.role === 'admin' ? 'Администратор' : 'Пользователь'}
-        </Typography>
-      </Box>
+    <Box>
+      <Typography variant="h4" gutterBottom>
+        Добро пожаловать, {user?.firstName} {user?.lastName}!
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 3 }}>
+        Ваша роль: {user?.role === 'admin' ? 'Администратор' : 'Пользователь'}
+      </Typography>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Всего постов
-              </Typography>
-              <Typography variant="h3">
-                {stats?.totalPosts || 0}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Комментариев
-              </Typography>
-              <Typography variant="h3">
-                {stats?.totalComments || 0}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Товаров
-              </Typography>
-              <Typography variant="h3">
-                {stats?.totalProducts || 0}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Container>
+      <Box sx={{ 
+        display: 'flex', 
+        gap: 3, 
+        flexWrap: 'wrap',
+        '& > *': {
+          flex: { xs: '1 1 100%', md: '1 1 30%' }
+        }
+      }}>
+        <Card>
+          <CardContent>
+            <Typography color="text.secondary" gutterBottom>
+              Всего постов
+            </Typography>
+            <Typography variant="h4">
+              {posts.length}
+            </Typography>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent>
+            <Typography color="text.secondary" gutterBottom>
+              Всего продуктов
+            </Typography>
+            <Typography variant="h4">
+              {products.length}
+            </Typography>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent>
+            <Typography color="text.secondary" gutterBottom>
+              Статус
+            </Typography>
+            <Typography variant="h4">
+              Активен
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+    </Box>
   );
 };

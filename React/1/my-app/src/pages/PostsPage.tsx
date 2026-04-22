@@ -7,13 +7,8 @@ import { getRequest, postRequest, putRequest, deleteRequest } from '../services/
 import { setPosts, addPost, updatePost, deletePost } from '../store/slices/dataSlice';
 import { CustomButton } from '../ui/CustomButton';
 import { Button } from '@mui/material';
+import { IPost } from '../types/post';
 
-interface IPost {
-  id: number;
-  title: string;
-  content: string;
-  userId: number;
-}
 
 export const PostsPage: React.FC = () => {
   const dispatch = useDispatch();

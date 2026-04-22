@@ -40,9 +40,14 @@ export const Register: React.FC = () => {
     <Container component="main" maxWidth="xs">
       <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
-          <Typography component="h1" variant="h5" textAlign="center" gutterBottom>
-            Регистрация
-          </Typography>
+          <Typography 
+  component="h1" 
+  variant="h5" 
+  sx={{ textAlign: 'center', mb: 2 }}
+  gutterBottom
+>
+  Регистрация
+</Typography>
           
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           

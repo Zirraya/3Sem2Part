@@ -45,9 +45,14 @@ export const Login: React.FC = () => {
         }}
       >
         <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
-          <Typography component="h1" variant="h5" textAlign="center" gutterBottom>
-            Вход в систему
-          </Typography>
+          <Typography 
+  component="h1" 
+  variant="h5" 
+  sx={{ textAlign: 'center', mb: 2 }}
+  gutterBottom
+>
+  Вход в систему
+</Typography>
           
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           
